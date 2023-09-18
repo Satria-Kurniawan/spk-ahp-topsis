@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\AlternatifController;
 use App\Http\Controllers\Admin\BobotPreferensiAHPController;
+use App\Http\Controllers\Admin\HasilAkhirController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\KriteriaController;
 use App\Http\Controllers\Admin\SubkriteriaController;
+use App\Http\Controllers\Admin\PerhitunganController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +49,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/subkriteria/edit/{idKriteria}/{idSubkriteria}', [SubkriteriaController::class, 'edit'])->name("subkriteria.edit");
     Route::post('/admin/subkriteria/update/{idSubkriteria}', [SubkriteriaController::class, 'update'])->name("subkriteria.update");
     Route::post('/admin/subkriteria/delete/{idSubkriteria}', [SubkriteriaController::class, 'delete'])->name("subkriteria.delete");
+
+    Route::get("/admin/alternatif", [AlternatifController::class, 'show'])->name("alternatif.show");
+    Route::get("/admin/alternatif/create", [AlternatifController::class, 'create'])->name("alternatif.create");
+    Route::post("/admin/alternatif/store", [AlternatifController::class, 'store'])->name("alternatif.store");
+    Route::get("/admin/alternatif/edit/{id}", [AlternatifController::class, 'edit'])->name("alternatif.edit");
+    Route::post("/admin/alternatif/update/{id}", [AlternatifController::class, 'update'])->name("alternatif.update");
+    Route::post("/admin/alternatif/delete/{id}", [AlternatifController::class, 'delete'])->name("alternatif.delete");
+
+    Route::get('/admin/perhitungan', [PerhitunganController::class, 'show'])->name('perhitungan.show');
+
+    Route::get('/admin/hasil', [HasilAkhirController::class, 'show'])->name('hasil.show');
 });
 
 require __DIR__ . '/auth.php';

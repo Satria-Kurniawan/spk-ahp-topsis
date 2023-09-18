@@ -13,7 +13,7 @@
     <main>
         <div class="bg-white rounded-md shadow-xl p-5">
             <div class="border-b pb-3 mb-3">
-                <div class="w-fit ml-auto">
+                <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">
                         Edit Kriteria</span>
                 </div>

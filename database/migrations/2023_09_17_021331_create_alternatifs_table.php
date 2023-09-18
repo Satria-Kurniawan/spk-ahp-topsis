@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('alternatifs', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
+            $table->json('data');
             $table->timestamps();
         });
     }

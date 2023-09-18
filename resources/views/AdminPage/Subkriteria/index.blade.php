@@ -16,17 +16,17 @@
         @foreach ($listKriteria as $kriteria)
             <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5">
                 <div class="flex justify-between border-b pb-3">
-                    <a href="{{ route('subkriteria.create', ['idKriteria' => $kriteria->id]) }}">
-                        <x-primary-button class="bg-green-500">
-                            <i class="fa-solid fa-plus mr-3"></i> Tambah
-                        </x-primary-button>
-                    </a>
                     <div>
                         <span class="py-1 px-3 rounded-md bg-blue-500 text-white text-center uppercase">
                             Kriteria {{ $kriteria->nama }}</span>
                         <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">
                             Tabel Subkriteria</span>
                     </div>
+                    <a href="{{ route('subkriteria.create', ['idKriteria' => $kriteria->id]) }}">
+                        <x-primary-button class="bg-green-500">
+                            <i class="fa-solid fa-plus mr-3"></i> Tambah
+                        </x-primary-button>
+                    </a>
                 </div>
                 <table class="w-full mt-3">
                     <thead class="border-b bg-gray-50">

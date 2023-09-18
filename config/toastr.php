@@ -24,6 +24,7 @@ return array(
     */
 
     'options' => [
+        'closeButton' => true,
         'positionClass'     => 'toast-bottom-center',
     ],
 );

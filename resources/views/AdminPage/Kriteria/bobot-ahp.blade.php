@@ -13,7 +13,7 @@
     <main>
         <div class="bg-white rounded-md shadow-xl p-5 relative w-[77vw] overflow-x-auto mb-5">
             <div class="border-b pb-3">
-                <div class="w-fit ml-auto">
+                <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">Perbandingan Data
                         Antar Kriteria</span>
                 </div>
@@ -36,7 +36,7 @@
                             }
                             this.data[namaKriteria1][namaKriteria2] = nilai;
                         }
-                    }">
+                    }" x-init="$watch('data', value => console.log(value))">
                         @php
                             $skalaPerbandingan = [1, 2, 3, 4, 5, 6, 7, 8, 9];
                         @endphp
@@ -55,18 +55,24 @@
                                             @foreach ($skalaPerbandingan as $nilai)
                                                 <span
                                                     class="py-1 px-2 bg-gray-800 text-white hover:bg-blue-500 cursor-pointer {{ $loop->index === 0 ? 'rounded-l-md' : ($loop->last ? 'rounded-r-md' : '') }}"
-                                                    x-bind:class="({{ $skalaTerisi }} === {{ $nilai }} && !(data[
-                                                        '{{ $kriteria1->nama }}'])) ? 'bg-green-500' : ((data[
-                                                        '{{ $kriteria1->nama }}'] && data[
-                                                        '{{ $kriteria1->nama }}'][
+                                                    x-bind:class="({{ $skalaTerisi !== null && $skalaTerisi === $nilai }} && !(data
+                                                        ?.[
+                                                            '{{ $kriteria1->nama }}'
+                                                        ])) ? 'bg-green-500' : ((data?.[
+                                                        '{{ $kriteria1->nama }}'
+                                                    ] && data?.[
+                                                        '{{ $kriteria1->nama }}'
+                                                    ][
                                                         '{{ $kriteria2->nama }}'
                                                     ] === {{ $nilai }}) || (
                                                         {{ $skalaTerisi }} === {{ $nilai }}) && !(
-                                                        data[
-                                                            '{{ $kriteria1->nama }}'][
+                                                        data?.[
+                                                            '{{ $kriteria1->nama }}'
+                                                        ][
                                                             '{{ $kriteria2->nama }}'
-                                                        ] && data[
-                                                            '{{ $kriteria1->nama }}'][
+                                                        ] && data?.[
+                                                            '{{ $kriteria1->nama }}'
+                                                        ][
                                                             '{{ $kriteria2->nama }}'
                                                         ] !== {{ $nilai }})) ?
                                                     'bg-green-500' : ''"
@@ -91,7 +97,7 @@
 
         <div class="bg-white rounded-md shadow-xl p-5 relative w-[77vw] overflow-x-auto mb-5">
             <div class="border-b pb-3">
-                <div class="w-fit ml-auto">
+                <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">Matriks
                         Perbandingan Berpasangan</span>
                 </div>
@@ -106,33 +112,36 @@
                     </tr>
                 </thead>
 
-                @foreach ($listKriteria as $kriteriaA)
-                    <tr class="border-b">
-                        <th class="py-2 px-4 border-r text-start bg-gray-50">{{ $kriteriaA->nama }}</th>
-                        @foreach ($listKriteria as $kriteriaB)
-                            <td
-                                class="py-2 px-4 border-l text-start {{ $kriteriaA->nama === $kriteriaB->nama ? 'bg-gray-50' : '' }}">
-                                {{ $dataMatriksBerpasangan[$kriteriaA->nama][$kriteriaB->nama] }}
+                <tbody>
+                    @foreach ($listKriteria as $kriteriaA)
+                        <tr class="border-b">
+                            <th class="py-2 px-4 border-r text-start bg-gray-50">{{ $kriteriaA->nama }}</th>
+                            @foreach ($listKriteria as $kriteriaB)
+                                @if (isset($dataMatriksBerpasangan[$kriteriaA->nama][$kriteriaB->nama]))
+                                    <td
+                                        class="py-2 px-4 border-l text-start {{ $kriteriaA->nama === $kriteriaB->nama ? 'bg-gray-50' : '' }}">
+                                        {{ $dataMatriksBerpasangan[$kriteriaA->nama][$kriteriaB->nama] }}
+                                    </td>
+                                @endif
+                            @endforeach
+                        </tr>
+                    @endforeach
+
+                    <tr class="border-t">
+                        <th class="py-2 px-4 border-r text-start bg-gray-50">Jumlah</th>
+                        @foreach ($jumlahPerKolom as $jumlah)
+                            <td class="py-2 px-4 border-l text-start">
+                                {{ $jumlah }}
                             </td>
                         @endforeach
                     </tr>
-                @endforeach
-
-                <tr class="border-t">
-                    <th class="py-2 px-4 border-r text-start bg-gray-50">Jumlah</th>
-                    @foreach ($jumlahPerKolom as $jumlah)
-                        <td class="py-2 px-4 border-l text-start">
-                            {{ $jumlah }}
-                        </td>
-                    @endforeach
-                </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="bg-white rounded-md shadow-xl p-5 relative w-[77vw] overflow-x-auto mb-5">
             <div class="border-b pb-3">
-                <div class="w-fit ml-auto">
+                <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">Matriks
                         Nilai Kriteria (Normalisasi)</span>
                 </div>
@@ -176,7 +185,7 @@
 
         <div class="bg-white rounded-md shadow-xl p-5 relative w-[77vw] overflow-x-auto mb-5">
             <div class="border-b pb-3">
-                <div class="w-fit ml-auto">
+                <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">
                         Matriks Penjumlahan Tiap Baris</span>
                 </div>
@@ -211,7 +220,7 @@
 
         <div class="bg-white rounded-md shadow-xl p-5 relative w-[77vw] overflow-x-auto mb-5">
             <div class="border-b pb-3">
-                <div class="w-fit ml-auto">
+                <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">
                         Perhitungan Rasio Konsistensi</span>
                 </div>
@@ -253,7 +262,7 @@
 
         <div class="bg-white rounded-md shadow-xl p-5 relative w-[77vw] overflow-x-auto mb-5">
             <div class="border-b pb-3">
-                <div class="w-fit ml-auto">
+                <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">
                         Hasil Perhitungan</span>
                 </div>
