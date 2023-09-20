@@ -40,7 +40,7 @@
                                             {{ $subkriteria->nama }}
                                         </option>
                                     @else
-                                        <option value="{{ $subkriteria->nama }}">
+                                        <option value="{{ $subkriteria->nilai }}">
                                             {{ $subkriteria->nama }}
                                         </option>
                                     @endif

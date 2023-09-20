@@ -28,68 +28,66 @@
                             <th class="py-2 px-4 border-l text-start">Nama Kriteria</th>
                         </tr>
                     </thead>
+                    {{-- {{ dd($dataBobotPreferensiAHP) }} --}}
                     <tbody x-data="{
-                        data: {},
+                        data: [],
+                        index: 0,
                         setSkala: function(namaKriteria1, namaKriteria2, nilai) {
-                            if (!this.data[namaKriteria1]) {
-                                this.data[namaKriteria1] = {};
+                            const existingData = Object.values(this.data);
+                            const existingIndex = existingData.findIndex(item => item.kriteria1 === namaKriteria1 && item.kriteria2 === namaKriteria2);
+                    
+                            if (existingIndex !== -1) {
+                                this.data[existingIndex].nilai = nilai;
+                            } else {
+                                this.data.push({ kriteria1: namaKriteria1, kriteria2: namaKriteria2, nilai: nilai });
                             }
-                            this.data[namaKriteria1][namaKriteria2] = nilai;
+                        },
+                        setBgColor: function(namaKriteria1, namaKriteria2, nilai) {
+                            const existingData = Object.values(this.data);
+                            const matchingData = existingData.find(item => item.kriteria1 === namaKriteria1 && item.kriteria2 === namaKriteria2);
+                    
+                            if (matchingData && matchingData.nilai == nilai) {
+                                return 'bg-green-500';
+                            } else {
+                                return 'bg-gray-800';
+                            }
                         }
-                    }" x-init="$watch('data', value => console.log(value))">
+                    }" x-init="data = [
+                        @foreach($dataBobotPreferensiAHP as $item) { kriteria1: '{{ $item->kriteria_1 }}', kriteria2: '{{ $item->kriteria_2 }}', nilai: '{{ $item->skala }}' },
+                        @endforeach
+                    ];
+                    $watch('data', value => console.log(value))">
+
                         @php
                             $skalaPerbandingan = [1, 2, 3, 4, 5, 6, 7, 8, 9];
                         @endphp
-                        @foreach ($listKriteria as $kriteria1)
-                            @foreach ($listKriteria as $kriteria2)
-                                @if ($kriteria1->nama !== $kriteria2->nama)
-                                    @php
-                                        $bobotAHP = $dataBobotPreferensiAHP->firstWhere(function ($item) use ($kriteria1, $kriteria2) {
-                                            return $item->kriteria_1 === $kriteria1->nama && $item->kriteria_2 === $kriteria2->nama;
-                                        });
-                                        $skalaTerisi = optional($bobotAHP)->skala;
-                                    @endphp
-                                    <tr class="border-b">
-                                        <td class="py-2 border-r px-4">{{ $kriteria1->nama }}</td>
-                                        <td class="py-2 flex w-fit mx-auto">
-                                            @foreach ($skalaPerbandingan as $nilai)
-                                                <span
-                                                    class="py-1 px-2 bg-gray-800 text-white hover:bg-blue-500 cursor-pointer {{ $loop->index === 0 ? 'rounded-l-md' : ($loop->last ? 'rounded-r-md' : '') }}"
-                                                    x-bind:class="({{ $skalaTerisi !== null && $skalaTerisi === $nilai }} && !(data
-                                                        ?.[
-                                                            '{{ $kriteria1->nama }}'
-                                                        ])) ? 'bg-green-500' : ((data?.[
-                                                        '{{ $kriteria1->nama }}'
-                                                    ] && data?.[
-                                                        '{{ $kriteria1->nama }}'
-                                                    ][
-                                                        '{{ $kriteria2->nama }}'
-                                                    ] === {{ $nilai }}) || (
-                                                        {{ $skalaTerisi }} === {{ $nilai }}) && !(
-                                                        data?.[
-                                                            '{{ $kriteria1->nama }}'
-                                                        ][
-                                                            '{{ $kriteria2->nama }}'
-                                                        ] && data?.[
-                                                            '{{ $kriteria1->nama }}'
-                                                        ][
-                                                            '{{ $kriteria2->nama }}'
-                                                        ] !== {{ $nilai }})) ?
-                                                    'bg-green-500' : ''"
-                                                    x-on:click="setSkala('{{ $kriteria1->nama }}', '{{ $kriteria2->nama }}', {{ $nilai }})">
-                                                    {{ $nilai }}
-                                                </span>
-                                            @endforeach
-                                        </td>
-                                        <td class="py-2 border-l px-4">{{ $kriteria2->nama }}</td>
-                                    </tr>
-                                @endif
+
+                        @foreach ($listKriteria as $index => $kriteria1)
+                            @php $remainingKriterias = $listKriteria->slice($index + 1); @endphp
+
+                            @foreach ($remainingKriterias as $kriteria2)
+                                <tr class="border-b">
+                                    <td class="py-2 border-r px-4">{{ $kriteria1->nama }}</td>
+                                    <td class="py-2 flex w-fit mx-auto">
+                                        @foreach ($skalaPerbandingan as $nilai)
+                                            <span
+                                                :class="setBgColor('{{ $kriteria1->nama }}', '{{ $kriteria2->nama }}',
+                                                    '{{ $nilai }}')"
+                                                class="py-1 px-2 text-white hover:bg-blue-500 cursor-pointer {{ $loop->index === 0 ? 'rounded-l-md' : ($loop->last ? 'rounded-r-md' : '') }}"
+                                                x-on:click="setSkala('{{ $kriteria1->nama }}', '{{ $kriteria2->nama }}', '{{ $nilai }}')">
+                                                {{ $nilai }}
+                                            </span>
+                                        @endforeach
+                                    </td>
+                                    <td class="py-2 border-l px-4">{{ $kriteria2->nama }}</td>
+                                </tr>
                             @endforeach
                         @endforeach
 
                         <input type="hidden" name="data" x-bind:value="JSON.stringify(data)">
                     </tbody>
                 </table>
+
                 <x-primary-button class="bg-green-500"><i
                         class="fa-solid fa-floppy-disk mr-3"></i>Simpan</x-primary-button>
             </form>
@@ -117,10 +115,10 @@
                         <tr class="border-b">
                             <th class="py-2 px-4 border-r text-start bg-gray-50">{{ $kriteriaA->nama }}</th>
                             @foreach ($listKriteria as $kriteriaB)
-                                @if (isset($dataMatriksBerpasangan[$kriteriaA->nama][$kriteriaB->nama]))
+                                @if (isset($dataMatriksBerpasangan[$kriteriaB->nama][$kriteriaA->nama]))
                                     <td
-                                        class="py-2 px-4 border-l text-start {{ $kriteriaA->nama === $kriteriaB->nama ? 'bg-gray-50' : '' }}">
-                                        {{ $dataMatriksBerpasangan[$kriteriaA->nama][$kriteriaB->nama] }}
+                                        class="py-2 px-4 border-l text-start {{ $kriteriaB->nama === $kriteriaA->nama ? 'bg-gray-50' : '' }}">
+                                        {{ $dataMatriksBerpasangan[$kriteriaB->nama][$kriteriaA->nama] }}
                                     </td>
                                 @endif
                             @endforeach

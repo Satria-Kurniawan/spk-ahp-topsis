@@ -5,13 +5,26 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
+    <main>
+        <section class="grid grid-cols-3 gap-5">
+            <div class="p-5 rounded-md shadow-md bg-white border-l-4 border-gray-800 flex justify-between">
+                <div>
+                    <span class="font-extrabold text-xl">{{ $jumlahKriteria }}</span> <span>Kriteria</span>
                 </div>
+                <i class="fa-solid fa-list-ol"></i>
             </div>
-        </div>
-    </div>
+            <div class="p-5 rounded-md shadow-md bg-white border-l-4 border-gray-800 flex justify-between">
+                <div>
+                    <span class="font-extrabold text-xl">{{ $jumlahSubkriteria }}</span> <span>Subkriteria</span>
+                </div>
+                <i class="fa-solid fa-bars-staggered"></i>
+            </div>
+            <div class="p-5 rounded-md shadow-md bg-white border-l-4 border-gray-800 flex justify-between">
+                <div>
+                    <span class="font-extrabold text-xl">{{ $jumlahAlternatif }}</span> <span>Alternatif</span>
+                </div>
+                <i class="fa-solid fa-clipboard-list"></i>
+            </div>
+        </section>
+    </main>
 </x-app-layout>

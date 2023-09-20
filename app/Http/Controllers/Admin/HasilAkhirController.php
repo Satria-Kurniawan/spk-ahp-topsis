@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Alternatif;
 use App\Models\Kriteria;
+use App\Models\Subkriteria;
 use Illuminate\Http\Request;
 
 class HasilAkhirController extends Controller
@@ -27,10 +28,26 @@ class HasilAkhirController extends Controller
         foreach ($listAlternatif as $index => $alternatif) {
             $nama = $alternatif->nama;
             $nilai = $dataNilaiPreferensi[$index];
+            $valueLokasi = $alternatif->data['Lokasi'];
+            $valueLokasiFloat = floatval($valueLokasi);
+
+            if (isset($valueLokasi)) {
+                $subkriteria = Subkriteria::where('isLokasi', true)->where('nilai', $valueLokasiFloat)->first();
+                $lokasi = $subkriteria->nama;
+                $lat = $subkriteria->lat;
+                $lon = $subkriteria->lon;
+            } else {
+                $lokasi = '';
+                $lat = '';
+                $lon = '';
+            }
 
             $hasilAkhir[] = [
                 'nama' => $nama,
                 'nilai' => $nilai,
+                'lokasi' => $lokasi,
+                'lat' => $lat,
+                'lon' => $lon
             ];
         }
 

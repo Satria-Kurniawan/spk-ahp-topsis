@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Alternatif;
 use App\Models\Kriteria;
 use App\Models\Subkriteria;
 use Illuminate\Http\Request;
@@ -32,9 +33,30 @@ class SubkriteriaController extends Controller
                 'nilai' => 'required',
             ]);
 
+            $isInputLokasi = filter_var($req->islokasi, FILTER_VALIDATE_BOOLEAN);
+
+            if ($isInputLokasi) {
+                $validatedLokasi = $req->validate([
+                    'islokasi' => 'required',
+                    'lat' => 'required',
+                    'lon' => 'required',
+                ]);
+
+                $isLokasi = true;
+                $lat =  $validatedLokasi['lat'];
+                $lon =  $validatedLokasi['lon'];
+            } else {
+                $isLokasi = false;
+                $lat =  "";
+                $lon =  '';
+            }
+
             Subkriteria::create([
                 'nama' => $validatedData['nama'],
                 'nilai' => $validatedData['nilai'],
+                'lat' => $lat,
+                'lon' => $lon,
+                'isLokasi' => $isLokasi,
                 'kriteria_id' => $idKriteria,
             ]);
 
@@ -64,7 +86,47 @@ class SubkriteriaController extends Controller
                 'nilai' => 'required',
             ]);
 
-            $subkriteria->update($validatedData);
+            $listAlternatif = Alternatif::all();
+
+            foreach ($listAlternatif as $alternatif) {
+                $data = $alternatif->data;
+
+                if ($data['Lokasi'] == $subkriteria->nilai) {
+                    if (isset($data['Lokasi']) || isset($data['lokasi'])) {
+                        $data['Lokasi'] = $validatedData['nilai'];
+
+                        $alternatif->data = $data;
+                        $alternatif->save();
+                    }
+                }
+            }
+
+            $isInputLokasi = filter_var($req->islokasi, FILTER_VALIDATE_BOOLEAN);
+
+            if ($isInputLokasi) {
+                $validatedLokasi = $req->validate([
+                    'islokasi' => 'required',
+                    'lat' => 'required',
+                    'lon' => 'required',
+                ]);
+
+                $isLokasi = true;
+                $lat =  $validatedLokasi['lat'];
+                $lon =  $validatedLokasi['lon'];
+            } else {
+                $isLokasi = false;
+                $lat =  "";
+                $lon =  '';
+            }
+
+            $subkriteria->update([
+                'nama' => $validatedData['nama'],
+                'nilai' => $validatedData['nilai'],
+                'lat' => $lat,
+                'lon' => $lon,
+                'isLokasi' => $isLokasi,
+            ]);
+
 
             toastr()->success('Data Subkriteria berhasil diperbarui.', 'Sukses');
             return redirect()->route('subkriteria.show');

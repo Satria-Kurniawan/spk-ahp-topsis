@@ -6,7 +6,7 @@
     </x-slot>
 
     <main>
-        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5">
+        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5 w-[76vw]">
             <div class="border-b pb-3">
                 <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">
@@ -35,7 +35,7 @@
             </table>
         </div>
 
-        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5">
+        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5 w-[76vw]">
             <div class="border-b pb-3">
                 <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">
@@ -64,7 +64,7 @@
             </table>
         </div>
 
-        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5">
+        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5 w-[76vw]">
             <div class="border-b pb-3">
                 <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">
@@ -95,7 +95,7 @@
             </table>
         </div>
 
-        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5">
+        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5 w-[76vw]">
             <div class="border-b pb-3">
                 <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">
@@ -127,7 +127,7 @@
             </table>
         </div>
 
-        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5">
+        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5 w-[76vw]">
             <div class="border-b pb-3">
                 <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">
@@ -155,7 +155,7 @@
             </table>
         </div>
 
-        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5">
+        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5 w-[76vw]">
             <div class="border-b pb-3">
                 <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">
@@ -183,7 +183,7 @@
             </table>
         </div>
 
-        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5">
+        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5 w-[76vw]">
             <div class="border-b pb-3">
                 <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">
@@ -216,7 +216,7 @@
             </table>
         </div>
 
-        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5">
+        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5 w-[76vw]">
             <div class="border-b pb-3">
                 <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">
@@ -249,7 +249,7 @@
             </table>
         </div>
 
-        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5">
+        <div class="bg-white rounded-md shadow-xl p-5 overflow-auto mb-5 w-[76vw]">
             <div class="border-b pb-3">
                 <div class="w-fit mr-auto">
                     <span class="py-1 px-3 rounded-md bg-gray-800 text-white text-center uppercase">

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Alternatif;
 use App\Models\Kriteria;
+use App\Models\Subkriteria;
 use Illuminate\Http\Request;
 
 
@@ -55,7 +57,33 @@ class KriteriaController extends Controller
                 'jenis' => 'required'
             ]);
 
+            $listAlternatif = Alternatif::all();
+
             $kriteria = Kriteria::findOrFail($id);
+
+            $namaKriteriaLama = str_replace(' ', '_', $kriteria->nama);
+            $namaKriteriaBaru = str_replace(' ', '_', $validatedData['nama']);
+
+            $listAlternatif = Alternatif::all();
+
+            // Perbarui nilai kriteria lama dengan kriteria baru pada setiap alternatif
+            foreach ($listAlternatif as $alternatif) {
+                $data = $alternatif->data;
+
+                // Pastikan kriteria lama ada dalam data alternatif
+                if (isset($data[$namaKriteriaLama])) {
+                    // Buat kunci baru dengan nama kriteria baru dan nilai yang sama
+                    $data[$namaKriteriaBaru] = $data[$namaKriteriaLama];
+
+                    // Hapus kunci lama
+                    unset($data[$namaKriteriaLama]);
+
+                    $alternatif->data = $data; // Simpan kembali sebagai string JSON
+                    $alternatif->save();
+                }
+            }
+
+            // Perbarui kriteria lama dengan data kriteria baru
             $kriteria->update($validatedData);
 
             toastr()->success('Data Kriteria berhasil perbarui.', 'Sukses');
@@ -70,7 +98,24 @@ class KriteriaController extends Controller
     {
         try {
             $kriteria = Kriteria::findOrFail($id);
-            $kriteria->delete();
+            $subkriteria = Subkriteria::where('kriteria_id', $id);
+            $namaKriteriaLama = str_replace(' ', '_', $kriteria->nama);
+
+            $listAlternatif = Alternatif::all();
+            foreach ($listAlternatif as $alternatif) {
+                $data = $alternatif->data;
+
+                if (isset($data[$namaKriteriaLama])) {
+                    // Hapus key kriteria yang akan dihapus
+                    unset($data[$namaKriteriaLama]);
+
+                    $alternatif->data = $data; // Simpan kembali sebagai string JSON
+                    $alternatif->save();
+                }
+            }
+
+            $subkriteria->delete();
+            $kriteria->delete(); // Hapus kriteria
 
             toastr()->success('Data Kriteria berhasil dihapus.', 'Sukses');
         } catch (\Throwable $err) {

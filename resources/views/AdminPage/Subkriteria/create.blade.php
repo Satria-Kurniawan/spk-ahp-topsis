@@ -10,7 +10,7 @@
         @endsection
     </x-slot>
 
-    <main>
+    <main x-data="{ islokasi: false }">
         <div class="bg-white rounded-md shadow-xl p-5">
             <div class="border-b mb-3 pb-3">
                 <div class="w-fit mr-auto">
@@ -34,6 +34,24 @@
                             name="nilai" min="0" max="9999.99" />
                         <x-input-error :messages="$errors->get('nilai')" />
                     </div>
+                    <div x-show="islokasi">
+                        <x-input-label>Latitude</x-input-label>
+                        <x-text-input type="text" placeholder="Masukkan latitude..." class="w-full" name="lat" />
+                        <x-input-error :messages="$errors->get('lat')" />
+                    </div>
+                    <div x-show="islokasi">
+                        <x-input-label>Longitude</x-input-label>
+                        <x-text-input type="text" placeholder="Masukkan longitude..." class="w-full"
+                            name="lon" />
+                        <x-input-error :messages="$errors->get('lon')" />
+                    </div>
+
+                    <input type="hidden" name="islokasi" x-bind:value="islokasi">
+
+                    @if (strtolower($kriteria->nama) == 'lokasi')
+                        <x-secondary-button type="button" @click="islokasi = !islokasi"
+                            x-text="islokasi ? 'Sembunyikan Input Lokasi (lat, long) ?' : 'Input Lokasi (lat, long) ?'"></x-secondary-button>
+                    @endif
                 </div>
                 <x-primary-button class="bg-green-500"><i
                         class="fa-solid fa-floppy-disk mr-3"></i>Simpan</x-primary-button>

@@ -27,6 +27,10 @@ class PerhitunganController extends Controller
 
     public static function hitungMatriksTernormalisasiR($listAlternatif)
     {
+        if (empty($listAlternatif->toArray())) {
+            return []; // Kembalikan matriks kosong jika $listAlternatif kosong
+        }
+
         $matriks = [];
 
         foreach ($listAlternatif as $alternatif) {

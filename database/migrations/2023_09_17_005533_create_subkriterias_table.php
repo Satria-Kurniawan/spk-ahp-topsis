@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->float('nilai');
+            $table->string('lat')->default(null);
+            $table->string('lon')->default(null);
             $table->bigInteger('kriteria_id');
             $table->timestamps();
         });

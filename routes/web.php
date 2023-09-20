@@ -7,6 +7,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\KriteriaController;
 use App\Http\Controllers\Admin\SubkriteriaController;
 use App\Http\Controllers\Admin\PerhitunganController;
+use App\Models\Alternatif;
+use App\Models\Kriteria;
+use App\Models\Subkriteria;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,12 +23,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::redirect('/', '/login');
+
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $jumlahKriteria = count(Kriteria::all());
+    $jumlahSubkriteria = count(Subkriteria::all());
+    $jumlahAlternatif = count(Alternatif::all());
+
+    return view('dashboard', compact('jumlahKriteria', 'jumlahSubkriteria', 'jumlahAlternatif'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

@@ -27,45 +27,24 @@ class BobotPreferensiAHPController extends Controller
     {
         try {
             $data = json_decode($req->input('data'), true);
-
             $listKriteria = Kriteria::all();
 
-            foreach ($listKriteria as $kriteria1) {
-                foreach ($listKriteria as $kriteria2) {
-                    if ($kriteria1->nama !== $kriteria2->nama) {
-                        // Memeriksa apakah kunci ada dalam $data
-                        if (isset($data[$kriteria1->nama][$kriteria2->nama])) {
-                            // Jika ada, gunakan nilai dari $data
-                            $skala = $data[$kriteria1->nama][$kriteria2->nama];
-                        } else {
-                            // Jika tidak ada, gunakan nilai dari database jika ada
-                            $bobotAHP = BobotPreferensiAHP::where('kriteria_1', $kriteria1->nama)
-                                ->where('kriteria_2', $kriteria2->nama)
-                                ->first();
+            foreach ($data as $item) {
+                $kriteria1 = $item['kriteria1'];
+                $kriteria2 = $item['kriteria2'];
+                $skala = $item['nilai'];
 
-                            if ($bobotAHP) {
-                                $skala = $bobotAHP->skala;
-                            } else {
-                                // Jika tidak ada di database, Anda mungkin ingin menentukan nilai default
-                                // atau tindakan lain sesuai dengan kebutuhan aplikasi Anda.
-                                $skala = 0; // Misalnya, nilai default adalah 0.
-                            }
-                        }
+                // Cek apakah kriteria1 dan kriteria2 ada di tabel Kriteria
+                $kriteria1Obj = $listKriteria->firstWhere('nama', $kriteria1);
+                $kriteria2Obj = $listKriteria->firstWhere('nama', $kriteria2);
 
-                        // Menyiapkan data yang akan diupdate atau diinsert
-                        $formattedData = [
-                            'kriteria_1' => $kriteria1->nama,
-                            'kriteria_2' => $kriteria2->nama,
-                            'skala' => $skala,
-                        ];
+                if (!$kriteria1Obj && !$kriteria2Obj) return;
 
-                        // Melakukan update atau insert ke dalam database
-                        BobotPreferensiAHP::updateOrInsert(
-                            ['kriteria_1' => $kriteria1->nama, 'kriteria_2' => $kriteria2->nama],
-                            $formattedData
-                        );
-                    }
-                }
+                // Data Kriteria ditemukan, lakukan insert/update ke tabel BobotPreferensiAHP
+                BobotPreferensiAHP::updateOrInsert(
+                    ['kriteria_1' => $kriteria1, 'kriteria_2' => $kriteria2],
+                    ['skala' => $skala]
+                );
             }
 
             $dataBobotPreferensiAHP = BobotPreferensiAHP::all();
