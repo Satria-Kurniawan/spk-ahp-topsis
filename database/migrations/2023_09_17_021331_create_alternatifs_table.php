@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->json('data');
+            $table->string('lat');
+            $table->string('lon');
             $table->timestamps();
         });
     }

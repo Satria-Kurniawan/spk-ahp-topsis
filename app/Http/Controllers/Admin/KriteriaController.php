@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Alternatif;
+use App\Models\BobotPreferensiAHP;
 use App\Models\Kriteria;
 use App\Models\Subkriteria;
 use Illuminate\Http\Request;
@@ -116,6 +117,8 @@ class KriteriaController extends Controller
 
             $subkriteria->delete();
             $kriteria->delete(); // Hapus kriteria
+            BobotPreferensiAHP::where('kriteria_1', $kriteria->nama)->delete();
+            BobotPreferensiAHP::where('kriteria_2', $kriteria->nama)->delete();
 
             toastr()->success('Data Kriteria berhasil dihapus.', 'Sukses');
         } catch (\Throwable $err) {

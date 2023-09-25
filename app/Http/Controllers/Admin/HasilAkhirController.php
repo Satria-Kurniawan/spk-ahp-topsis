@@ -28,24 +28,26 @@ class HasilAkhirController extends Controller
         foreach ($listAlternatif as $index => $alternatif) {
             $nama = $alternatif->nama;
             $nilai = $dataNilaiPreferensi[$index];
-            $valueLokasi = $alternatif->data['Lokasi'];
-            $valueLokasiFloat = floatval($valueLokasi);
+            $lat = $alternatif->lat;
+            $lon = $alternatif->lon;
+            // $valueLokasi = $alternatif->data['Lokasi'];
+            // $valueLokasiFloat = floatval($valueLokasi);
 
-            if (isset($valueLokasi)) {
-                $subkriteria = Subkriteria::where('isLokasi', true)->where('nilai', $valueLokasiFloat)->first();
-                $lokasi = $subkriteria->nama;
-                $lat = $subkriteria->lat;
-                $lon = $subkriteria->lon;
-            } else {
-                $lokasi = '';
-                $lat = '';
-                $lon = '';
-            }
+            // if (isset($valueLokasi)) {
+            //     $subkriteria = Subkriteria::where('isLokasi', true)->where('nilai', $valueLokasiFloat)->first();
+            //     $lokasi = $subkriteria->nama;
+            //     $lat = $subkriteria->lat;
+            //     $lon = $subkriteria->lon;
+            // } else {
+            //     $lokasi = '';
+            //     $lat = '';
+            //     $lon = '';
+            // }
 
             $hasilAkhir[] = [
                 'nama' => $nama,
                 'nilai' => $nilai,
-                'lokasi' => $lokasi,
+                // 'lokasi' => $lokasi,
                 'lat' => $lat,
                 'lon' => $lon
             ];

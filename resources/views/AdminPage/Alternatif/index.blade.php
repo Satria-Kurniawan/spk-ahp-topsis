@@ -28,6 +28,8 @@
                         @foreach ($listKriteria as $kriteria)
                             <th class="py-2 px-4 text-start">{{ $kriteria->nama }}</th>
                         @endforeach
+                        <th class="py-2 px-4 text-start">Latitude</th>
+                        <th class="py-2 px-4 text-start">Longitude</th>
                         <th class="py-2 px-4 text-start w-36">Aksi</th>
                     </tr>
                 </thead>
@@ -39,6 +41,8 @@
                             @foreach ($alternatif->data as $key => $value)
                                 <td class="py-2 px-4">{{ $value }}</td>
                             @endforeach
+                            <td class="py-2 px-4">{{ $alternatif->lat }}</td>
+                            <td class="py-2 px-4">{{ $alternatif->lon }}</td>
                             <td class="py-2 px-4">
                                 <a href="{{ route('alternatif.edit', ['id' => $alternatif->id]) }}">
                                     <x-secondary-button class="mr-1 text-blue-500">

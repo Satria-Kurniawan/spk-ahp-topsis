@@ -40,6 +40,16 @@
                             </select>
                         </div>
                     @endforeach
+                    <div>
+                        <x-input-label>Latitude</x-input-label>
+                        <x-text-input placeholder="Masukan latitude..." class="w-full" name="lat" />
+                        <x-input-error :messages="$errors->get('lat')" />
+                    </div>
+                    <div>
+                        <x-input-label>Longitude</x-input-label>
+                        <x-text-input placeholder="Masukan longitude..." class="w-full" name="lon" />
+                        <x-input-error :messages="$errors->get('lon')" />
+                    </div>
                 </div>
                 <x-primary-button class="bg-green-500"><i
                         class="fa-solid fa-floppy-disk mr-3"></i>Simpan</x-primary-button>

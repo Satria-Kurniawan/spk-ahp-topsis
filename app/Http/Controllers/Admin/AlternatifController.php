@@ -34,6 +34,8 @@ class AlternatifController extends Controller
 
             unset($data['_token']);
             unset($data['nama']);
+            unset($data['lat']);
+            unset($data['lon']);
 
             $rules = [];
 
@@ -50,12 +52,16 @@ class AlternatifController extends Controller
             }
 
             $validatedData = $req->validate([
-                'nama' => 'required|string'
+                'nama' => 'required|string',
+                'lat' => 'required|string',
+                'lon' => 'required|string',
             ]);
 
             Alternatif::create([
                 'nama' => $validatedData['nama'],
-                'data' => $data
+                'data' => $data,
+                'lat' => $validatedData['lat'],
+                'lon' => $validatedData['lon'],
             ]);
 
             toastr()->success('Data Alternatif berhasil disimpan.', 'Sukses');
@@ -82,6 +88,8 @@ class AlternatifController extends Controller
 
             unset($data['_token']);
             unset($data['nama']);
+            unset($data['lat']);
+            unset($data['lon']);
 
             $rules = [];
 
@@ -98,14 +106,18 @@ class AlternatifController extends Controller
             }
 
             $validatedData = $req->validate([
-                'nama' => 'required|string'
+                'nama' => 'required|string',
+                'lat' => 'required|string',
+                'lon' => 'required|string',
             ]);
 
             $alternatif = Alternatif::findOrFail($id);
 
             $alternatif->update([
                 'nama' => $validatedData['nama'],
-                'data' => $data
+                'data' => $data,
+                'lat' => $validatedData['lat'],
+                'lon' => $validatedData['lon'],
             ]);
 
             toastr()->success('Data Alternatif berhasil disimpan.', 'Sukses');

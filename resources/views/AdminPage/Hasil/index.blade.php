@@ -29,7 +29,7 @@
                             <td class="py-2 px-4">{{ $item['nilai'] }}</td>
                             <td class="py-2 px-4">{{ $loop->iteration }}</td>
                             <td class="py-2 px-4 border-l cursor-pointer"
-                                x-on:click="setSelected({ nama: '{{ $item['nama'] }}', nilai: '{{ $item['nilai'] }}', ranking: '{{ $loop->iteration }}', lat: {{ $item['lat'] }}, lon: {{ $item['lon'] }}, lokasi: '{{ $item['lokasi'] }}' })">
+                                x-on:click="setSelected({ nama: '{{ $item['nama'] }}', nilai: '{{ $item['nilai'] }}', ranking: '{{ $loop->iteration }}', lat: {{ $item['lat'] }}, lon: {{ $item['lon'] }}, })">
                                 <span class="bg-green-500 p-2 text-white rounded-md"><i
                                         class="fa-solid fa-map-location-dot"></i></span>
                             </td>
@@ -72,10 +72,10 @@
                             var lat = selectedData.lat;
                             var lon = selectedData.lon;
                             var nama = selectedData.nama;
-                            var lokasi = selectedData.lokasi;
+                            // var lokasi = selectedData.lokasi;
 
                             var marker = L.marker([lat, lon]).addTo(mymap);
-                            marker.bindPopup('Nama: ' + nama + '<br>Lokasi: ' + lokasi).openPopup();
+                            marker.bindPopup(nama).openPopup();
 
                             // Set peta (mymap) ke koordinat baru berdasarkan selectedData
                             mymap.setView([lat, lon], 13);
