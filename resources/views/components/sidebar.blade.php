@@ -1,4 +1,4 @@
-<aside class="h-screen sticky top-0 w-80 bg-gray-800 p-5 text-white shadow-xl">
+<aside class="h-screen sticky top-0 w-[20vw] bg-gray-800 p-5 text-white shadow-xl">
     <div>
         <h1 class="font-bold text-xl">SPK-AHP-TOPSIS</h1>
     </div>

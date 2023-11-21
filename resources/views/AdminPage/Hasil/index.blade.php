@@ -49,8 +49,6 @@
             <div id="map" style="width: 100%; height: 500px;"></div>
         </div>
 
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
         <script>
             function selected() {
                 selectedData = null;
